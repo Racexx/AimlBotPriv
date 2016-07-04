@@ -1,9 +1,9 @@
 package mainpackagenlp;
 import java.util.Scanner;
 
-import Shop.Inventory;
-import Shop.Product;
-import Shop.Questionnaire;
+import shops.Inventory;
+import shops.Product;
+import shops.Questionnaire;
 
 public class MainClass {
 	static Questionnaire quest = new Questionnaire();

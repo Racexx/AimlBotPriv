@@ -1,9 +1,9 @@
 package mainpackagenlp;
 import java.util.ArrayList;
 
-import Shop.Inventory;
-import Shop.Product;
 import edu.stanford.nlp.util.StringUtils;
+import shops.Inventory;
+import shops.Product;
 
 public class AnswerBuilder {
 	String root;
