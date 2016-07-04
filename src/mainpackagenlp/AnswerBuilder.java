@@ -81,12 +81,17 @@ public class AnswerBuilder {
 	}
 	public String getProduct()
 	{	
+		
 		for(Product x :Inventory.productsList)
-		for(String y : chain)
 		{
-			if(y.contains(x.getName()))
-			{
+			if(root.contains(x.getName()))
 				return x.getName();
+			for(String y : chain)
+			{
+				if(y.contains(x.getName()))
+				{
+					return x.getName();
+				}
 			}
 		}
 		return null;
