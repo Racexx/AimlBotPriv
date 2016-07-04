@@ -36,6 +36,7 @@ public class Questionnaire {
 		return product;
 	}
 	
+	
 	public int statusQuestion()
 	{
 		if(product == null)

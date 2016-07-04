@@ -18,7 +18,10 @@ public class MainClass {
 		while(true)
 		{	
 			if(quest.statusQuestion() == 1)
-			questionOne(shop,nlp,scan);
+			{
+				questionOne(shop,nlp,scan);
+				// tu powinno bys sprawdzenie czy chain zawiera produkt jezeli nie to wypisanie ze nie zostal wybrany produkt
+			}
 			if(quest.statusQuestion() == 2)
 			questionTwo(shop,nlp,scan);
 			if(quest.statusQuestion() == 3)
@@ -36,7 +39,7 @@ public class MainClass {
 	}
 
 	private static void questionFive(Inventory shop, Nlp nlp, Scanner scan) {
-		System.out.println("What is your street ?");
+		System.out.println("What is your street ?");// nie wiem czy pytania nie umieœciæ w aimlu
 		AnswerBuilder answer = nlp.question(scan.nextLine());
 		System.out.println("------------------------\n"+answer.toString());
 		questionnaireupdate(answer);
