@@ -13,6 +13,7 @@ public class MainAiml {
 	PrintWriter stdin = new PrintWriter(p.getOutputStream());
 	InputStream is = p.getInputStream();
 	BufferedReader br = new BufferedReader(new InputStreamReader(is));
+	AimlTample temp;
 
 	public MainAiml() {
 		try {
@@ -46,6 +47,16 @@ public class MainAiml {
 			return null;
 		else
 			return answer;
+	}
+	public boolean addToAiml(String question,String answer){
+		try {
+			temp.addaiml(question,answer);
+			return true;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }
