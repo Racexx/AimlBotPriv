@@ -72,5 +72,9 @@ public class Questionnaire {
 		temp+="PIECS: " + pices +"\n";
 		return temp;
 	}
+	public int getPiecs() {
+		// TODO Auto-generated method stub
+		return pices;
+	}
 	
 }

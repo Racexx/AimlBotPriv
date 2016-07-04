@@ -27,5 +27,6 @@ public class Product {
 		return name+" "+piecs+"pics "+price+"$";
 				
 	}
+
 	
 }

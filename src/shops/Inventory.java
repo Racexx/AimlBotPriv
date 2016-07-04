@@ -27,5 +27,19 @@ public class Inventory {
 		}
 		return temp;
 	}
+	public void updatePices(String product , int piecs) {
+		
+		for(Product x: productsList)
+		{
+			if(x.getName().equals(product))
+			{
+				x.removePiecs(piecs);
+			}
+		}
+		
+		
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

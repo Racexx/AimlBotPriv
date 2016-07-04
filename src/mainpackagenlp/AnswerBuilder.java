@@ -12,11 +12,12 @@ public class AnswerBuilder {
 	ArrayList <String> chain = new ArrayList<String>();
 	ArrayList <String> location = new ArrayList<String>();
 	ArrayList <String> person = new ArrayList<String>();
-	
+	String Street;
 	
 	
 	AnswerBuilder(String question)
 	{
+		
 		this.qustion = question;
 	}
 	
@@ -79,9 +80,19 @@ public class AnswerBuilder {
 		
 		return -1;
 	}
+	public String getStreet()
+	{	
+		if(!chain.isEmpty())
+		for(String x:chain){
+			if(x.contains("St."))
+				return x;
+		}
+		return null;
+	}
 	public String getProduct()
 	{	
-		
+		if(root.isEmpty() || chain.isEmpty())
+			return null;
 		for(Product x :Inventory.productsList)
 		{
 			if(root.contains(x.getName()))
@@ -96,6 +107,7 @@ public class AnswerBuilder {
 		}
 		return null;
 	}
+	
 	
 	public String toString()
 	{

@@ -36,6 +36,7 @@ public class Nlp {
 	
 	public AnswerBuilder question(String question)
 	{
+
 		AnswerBuilder answer = new AnswerBuilder(question);
 		// PrintWriter out =new PrintWriter(System.out);
 //		    if (args.length > 1) {

@@ -1,6 +1,6 @@
 package mainpackagenlp;
-import java.util.Scanner;
 
+import java.util.Scanner;
 import shops.Inventory;
 import shops.Product;
 import shops.Questionnaire;
@@ -19,65 +19,42 @@ public class MainClass {
 		{	
 			if(quest.statusQuestion() == 1)
 			{
-				questionOne(shop,nlp,scan);
+				question("What do you want to buy ?",shop,nlp,scan);
 				// tu powinno bys sprawdzenie czy chain zawiera produkt jezeli nie to wypisanie ze nie zostal wybrany produkt
 			}
 			if(quest.statusQuestion() == 2)
-			questionTwo(shop,nlp,scan);
+				question("How many "+quest.getProduct()+" you wont to buy ?",shop,nlp,scan);
 			if(quest.statusQuestion() == 3)
-			questionThree(shop,nlp,scan);
+				question("What is you name and surrname ?",shop,nlp,scan);
 			if(quest.statusQuestion() == 4)
-			questionFour(shop,nlp,scan);
+				question("Where do you live ?",shop,nlp,scan);
 			if(quest.statusQuestion() == 5)
-			questionFive(shop,nlp,scan);
+				question("What is your street ? pls use St.",shop,nlp,scan);
 			if(quest.statusQuestion() == 0)
 			{
-				System.out.println("Complieted");
+				System.out.println("Dziêkujemy za zakupy w tesko XD");
+				shop.updatePices(quest.getProduct(),quest.getPiecs()); // powinno byc sprawdzanie sztuk nie ma tego
+				quest = new Questionnaire();
 			}
 		}
 	//	maciek.question(scan.nextLine());
 	}
 
-	private static void questionFive(Inventory shop, Nlp nlp, Scanner scan) {
-		System.out.println("What is your street ?");// nie wiem czy pytania nie umieœciæ w aimlu
-		AnswerBuilder answer = nlp.question(scan.nextLine());
+	private static void question(String string, Inventory shop, Nlp nlp, Scanner scan) {
+		if(string.contains("What do you want to buy ?")){System.out.println(shop.toString());}
+		System.out.println(string);
+		String question = scan.nextLine();
+		if(question == null || question.equals("") || question.equals("null"))
+		{
+			// tekst jest pusty
+		}else{
+		AnswerBuilder answer = nlp.question(question);
 		System.out.println("------------------------\n"+answer.toString());
 		questionnaireupdate(answer);
-		
+		}
 	}
 
-	private static void questionFour(Inventory shop, Nlp nlp, Scanner scan) {
-		System.out.println("Where do you live ?");
-		AnswerBuilder answer = nlp.question(scan.nextLine());
-		System.out.println("------------------------\n"+answer.toString());
-		questionnaireupdate(answer);
-		
-	}
-
-	private static void questionThree(Inventory shop, Nlp nlp, Scanner scan) {
-		System.out.println("What is you name and surrname ?");
-		AnswerBuilder answer = nlp.question(scan.nextLine());
-		System.out.println("------------------------\n"+answer.toString());
-		questionnaireupdate(answer);
-		
-	}
-
-	private static void questionTwo(Inventory shop, Nlp nlp, Scanner scan) {
-		System.out.println("How many "+quest.getProduct()+" you wont to buy ?");// chyba trzeba zapisac do aimla xd
-		AnswerBuilder answer = nlp.question(scan.nextLine());
-		System.out.println("------------------------\n"+answer.toString());
-		questionnaireupdate(answer);
-	}
-
-	private static void questionOne(Inventory shop, Nlp nlp, Scanner scan) 
-	{
-		
-		System.out.println(shop.toString());
-		System.out.println("What do you want to buy ?");
-		AnswerBuilder answer = nlp.question(scan.nextLine());
-		System.out.println("------------------------\n"+answer.toString());
-		questionnaireupdate(answer);
-	}
+	
 
 	private static void questionnaireupdate(AnswerBuilder answer) {
 		if(answer.getLocation() != null)
@@ -86,8 +63,10 @@ public class MainClass {
 		quest.addPersonality(answer.getPerson());
 		if(answer.getProduct() != null)
 		quest.addProduct(answer.getProduct());
-		if(answer.getPiecs() != -1)
+		if(answer.getPiecs() != -1 && quest.getPiecs() == -1)
 		quest.addPiecs(answer.getPiecs());
+		if(answer.getStreet() != null)
+		quest.addStreet(answer.getStreet());
 		System.out.println(quest.toString());
 		
 	}
