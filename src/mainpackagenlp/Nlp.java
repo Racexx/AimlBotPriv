@@ -1,3 +1,4 @@
+package mainpackagenlp;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class Nlp {
 	
 	
 	
-	public void question(String question)
+	public AnswerBuilder question(String question)
 	{
 		AnswerBuilder answer = new AnswerBuilder(question);
 		// PrintWriter out =new PrintWriter(System.out);
@@ -69,7 +70,7 @@ public class Nlp {
 		    pipeline.annotate(annotation);
 
 		    // this prints out the results of sentence analysis to file(s) in good formats
-		    pipeline.prettyPrint(annotation, out);
+		//    pipeline.prettyPrint(annotation, out);
 //		    if (xmlOut != null) {
 //		      pipeline.xmlPrint(annotation, xmlOut);
 //		    }
@@ -77,10 +78,10 @@ public class Nlp {
 		    // Access the Annotation in code
 		    // The toString() method on an Annotation just prints the text of the Annotation
 		    // But you can see what is in it with other methods like toShorterString()
-		    out.println();
-		    out.println("The top level annotation");
-		    out.println(annotation.toShorterString());
-		    out.println();
+		 //  out.println();
+		  //  out.println("The top level annotation");
+		 //   out.println(annotation.toShorterString());
+		 //   out.println();
 		    
 		    // An Annotation is a Map with Class keys for the linguistic analysis types.
 		    // You can get and use the various analyses individually.
@@ -88,59 +89,100 @@ public class Nlp {
 		    List<CoreMap> sentences = annotation.get(CoreAnnotations.SentencesAnnotation.class);
 		    if (sentences != null && ! sentences.isEmpty()) {
 		      CoreMap sentence = sentences.get(0);
-		      out.println("The keys of the first sentence's CoreMap are:");
-		      out.println(sentence.keySet());
-		      out.println();
-		      out.println("The first sentence is:");
-		      out.println(sentence.toShorterString());
-		      out.println();
-		      out.println("The first sentence tokens are:");
+//		      out.println("The keys of the first sentence's CoreMap are:");
+//		      out.println(sentence.keySet());
+		   //   out.println();
+		   //   out.println("The first sentence is:");
+		   //   out.println(sentence.toShorterString());
+		    //  out.println();
+		   //   out.println("The first sentence tokens are:");
 		      for (CoreMap token : sentence.get(CoreAnnotations.TokensAnnotation.class)) {
-		        out.println(token.toShorterString());
+		    	
+		    	  if(token.toShorterString().contains("NamedEntityTag=LOCATION"))
+		    	  {
+		    		 answer.addlocation(getString(token.toShorterString()));
+		    	  }
+		    	  if(token.toShorterString().contains("NamedEntityTag=PERSON"))
+		    	  {
+		    		 answer.addPerson(getString(token.toShorterString()));
+		    	  }
+		     //   out.println(token.toShorterString());
 		      }
 		      Tree tree = sentence.get(TreeCoreAnnotations.TreeAnnotation.class);
-		      out.println();
-		      out.println("The first sentence parse tree is:");
-		      tree.pennPrint(out);
-		      out.println();
-		      out.println("The first sentence basic dependencies are:");
-		      out.println(sentence.get(SemanticGraphCoreAnnotations.BasicDependenciesAnnotation.class).toString(SemanticGraph.OutputFormat.LIST));
-		      out.println("The first sentence collapsed, CC-processed dependencies are:");
+		   //   out.println();
+		    //  out.println("The first sentence parse tree is:");
+		   //   tree.pennPrint(out);
+		   //   out.println();
+		   //   out.println("The first sentence basic dependencies are:");
+		   //   out.println(sentence.get(SemanticGraphCoreAnnotations.BasicDependenciesAnnotation.class).toString(SemanticGraph.OutputFormat.LIST));
+		   //   out.println("The first sentence collapsed, CC-processed dependencies are:");
 		      SemanticGraph graph = sentence.get(SemanticGraphCoreAnnotations.CollapsedCCProcessedDependenciesAnnotation.class);
-		      out.println(graph.toString(SemanticGraph.OutputFormat.LIST));
+		  //    out.println(graph.toString(SemanticGraph.OutputFormat.LIST));
 
 		      // Access coreference. In the coreference link graph,
 		      // each chain stores a set of mentions that co-refer with each other,
 		      // along with a method for getting the most representative mention.
 		      // Both sentence and token offsets start at 1!
-		      out.println("Coreference information");
+		    //  out.println("Coreference information");
 		      Map<Integer, CorefChain> corefChains =
 		          annotation.get(CorefCoreAnnotations.CorefChainAnnotation.class);
-		      if (corefChains == null) { return; }
+		   //   if (corefChains == null) { return; }
 		      for (Map.Entry<Integer,CorefChain> entry: corefChains.entrySet()) {
 		  //  	  //tu bedzie szukanie po tablicy produktów 
-		        out.println("Chain " + entry.getKey() + " ");
+		     //   out.println("Chain " + entry.getKey() + " ");
 		        for (CorefChain.CorefMention m : entry.getValue().getMentionsInTextualOrder()) {
 		          // We need to subtract one since the indices count from 1 but the Lists start from 0
 		          List<CoreLabel> tokens = sentences.get(m.sentNum - 1).get(CoreAnnotations.TokensAnnotation.class);
-		          out.println("takie chainy mam :" +lookForChain(m.toString()));
+		      //    out.println("takie chainy mam :" +lookForChain(m.toString()));
 		          answer.addChain(lookForChain(m.toString()));
 		          // We subtract two for end: one for 0-based indexing, and one because we want last token of mention not one following.
-		          out.println("  " + m + ", i.e., 0-based character offsets [" + tokens.get(m.startIndex - 1).beginPosition() +
-		                  ", " + tokens.get(m.endIndex - 2).endPosition() + ")");
+		       //   out.println("  " + m + ", i.e., 0-based character offsets [" + tokens.get(m.startIndex - 1).beginPosition() +
+		               //   ", " + tokens.get(m.endIndex - 2).endPosition() + ")");
 		        }
 		      }
-		      out.println();
+		   //   out.println();
 		     // String lookfordependency = sentence.get(SemanticGraphCoreAnnotations.BasicDependenciesAnnotation.class ).toString(SemanticGraph.OutputFormat.LIST);
 		     // sentence.get( SemanticGraphCoreAnnotations.BasicDependenciesAnnotation.class  < root >);
 		    
-		      out.println("ZWRACAM Roota:"+lookForMainDependency(sentence.get(SemanticGraphCoreAnnotations.BasicDependenciesAnnotation.class ).toString(SemanticGraph.OutputFormat.LIST)));
+		    
 		      answer.setRoot(lookForMainDependency(sentence.get(SemanticGraphCoreAnnotations.BasicDependenciesAnnotation.class ).toString(SemanticGraph.OutputFormat.LIST)));
 		     // out.println("The first sentence overall sentiment rating is " + sentence.get(SentimentCoreAnnotations.SentimentClass.class));
+		      
+		      return answer;
+		      
 		    }
 		  //  IOUtils.closeIgnoringExceptions(out);
 		   // IOUtils.closeIgnoringExceptions(xmlOut);
+			return answer;
 	}
+	private String getString(String temp) {
+		// TODO A=to-generated method stub
+		int startoffset = -1;
+		int endoffset = -1;
+		for(int i=0 ; i < temp.length() ; i++ )
+		{
+		 	if (temp.charAt(i) == '=')
+		 	{
+		 		startoffset = i;
+		 	}
+		 	if (temp.charAt(i) == ' ')
+		 	{
+		 		endoffset = i;
+		 	}
+		 	if(startoffset != -1 && endoffset != -1)
+		 	{
+		 		return temp.substring((startoffset +1) , endoffset);
+		 	}
+		}
+		return null;
+	}
+
+
+
+
+
+
+
 	private String lookForChain(String  m) {
 		int startoffset=-1;
 		int endoffset=-1;
@@ -158,7 +200,7 @@ public class Nlp {
 			}
 			if(startoffset != -1 && endoffset != -1)
 			{
-				return m.substring(startoffset+1 , endoffset);
+				return m.substring((startoffset+1) , endoffset);
 			}
 		}
 		return m; 
