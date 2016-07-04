@@ -1,11 +1,11 @@
 package shops;
 
 public class Questionnaire {
-	String product=null;
-	int pices=-1;
-	String personality=null;
-	String location=null;
-	String street=null;
+	private String product=null;
+	private int pices=-1;
+	private String personality=null;
+	private String location=null;
+	private String street=null;
 	
 	public Questionnaire()
 	{
@@ -75,6 +75,14 @@ public class Questionnaire {
 	public int getPiecs() {
 		// TODO Auto-generated method stub
 		return pices;
+	}
+	public String getLocation() {
+		// TODO Auto-generated method stub
+		return location;
+	}
+	public String getPerson() {
+		// TODO Auto-generated method stub
+		return personality;
 	}
 	
 }

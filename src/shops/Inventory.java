@@ -6,7 +6,7 @@ public class Inventory {
 	
 	
 	public Inventory() {
-		addProducts(new Product("headfon", 100 , 20));
+		addProducts(new Product("headfons", 100 , 20));
 		addProducts(new Product("monitor", 50 , 520));
 		addProducts(new Product("mouse", 50 , 40));
 		addProducts(new Product("GPU", 40 , 300));

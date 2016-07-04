@@ -91,8 +91,6 @@ public class AnswerBuilder {
 	}
 	public String getProduct()
 	{	
-		if(root.isEmpty() || chain.isEmpty())
-			return null;
 		for(Product x :Inventory.productsList)
 		{
 			if(root.contains(x.getName()))

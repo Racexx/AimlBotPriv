@@ -26,38 +26,41 @@ public class ChatController {
     Inventory shop ;
 	Nlp nlp ;
     static Questionnaire quest;
-
+    String [] questionList  = {"What do you want to buy ?" ,"How many * you wont to buy ?" , "What is you name and surrname ?" ,"Where do you live ?" ,"What is your street ?" , "Dziêkujemy za zakupy w tesko XD"}; 
     public ChatController() {
 		// TODO Auto-generated constructor stub
     	shop = new Inventory();
    	 	nlp = new Nlp();
-   	 	quest = new Questionnaire();
+   	 	
 	}
     @FXML
     public void initialize(){
+    	quest = new Questionnaire();
     	listStatic=listOfMessages;
     	System.out.println("Tworze initalize");
+    	question(-1,shop, nlp, textToSendArea.getText());
     	sendButton.setOnAction(e->{
     		System.out.println("WSZEDLEM");
     		
     		switch (quest.statusQuestion()) {
 			case 1:
-				question("What do you want to buy ?",shop, nlp, textToSendArea.getText());
+				question(1,shop, nlp, textToSendArea.getText());
 				break;
 			case 2:
-				question("How many " + quest.getProduct() + " you wont to buy ?",shop , nlp, textToSendArea.getText());
+				question(2,shop , nlp, textToSendArea.getText());
 				break;
 			case 3:
-				question("What is you name and surrname ?",shop, nlp, textToSendArea.getText());
+				question(3,shop, nlp, textToSendArea.getText());
 				break;
 			case 4:
-				question("Where do you live ?",shop, nlp, textToSendArea.getText());
+				question(4,shop, nlp, textToSendArea.getText());
 				break;
 			case 5:
-				question("What is your street ?",shop, nlp, textToSendArea.getText());
+				question(5,shop, nlp, textToSendArea.getText());
 				break;
 			case 0:
-				System.out.println("Complieted");
+				initialize();
+				//chyba dokleic przedmioty trza
 			}
     		textToSendArea.clear();
     		listOfMessages.scrollTo(listOfMessages.getItems().size());
@@ -70,31 +73,71 @@ public class ChatController {
     	
     	 
     }
-	private void question(String string, Inventory shop, Nlp nlp, String scan) {
-		if(string.contains("What do you want to buy ?")){listOfMessages.getItems().add(shop.toString());}
-		listOfMessages.getItems().add(string);
+	private void question(int i, Inventory shop, Nlp nlp, String scan) {
+		if(i == -1){listOfMessages.getItems().add(shop.toString()); listOfMessages.getItems().add(questionList[0]);}
+		
 		String question = scan;
-		if(question == null || question.equals("") || question.equals("null"))
+		if(question == null || question.equals("") || question.equals("null") || question.equals("\n"))
 		{
 			// tekst jest pusty
 		}else{
 		AnswerBuilder answer = nlp.question(question);
-		listOfMessages.getItems().add("------------------------\n"+answer.toString());
-		questionnaireupdate(answer);
+		//listOfMessages.getItems().add("------------------------\n"+answer.toString());
+		System.out.println("------------------------\n"+answer.toString());
+		if(i == -1){}
+		else{
+			if(questionnaireupdate(answer))
+				{
+					
+					AddtoQuestionProducts();
+					listOfMessages.getItems().add(questionList[i]);
+				}else{
+					listOfMessages.getItems().add(questionList[i-1]);
+				}
+			}
 		}
 	}
 		
-	private  void questionnaireupdate(AnswerBuilder answer) {
-		if (answer.getLocation() != null)
+	private void AddtoQuestionProducts() {
+		if(questionList[1].contains("*") && quest.getProduct() != null)
+		{
+			questionList[1] = questionList[1].replace("*", quest.getProduct());
+		}
+		
+	}
+	private  boolean questionnaireupdate(AnswerBuilder answer) {
+		int p=0;
+		if (answer.getLocation() != null && quest.getLocation() == null)
+		{	
 			quest.addLocation(answer.getLocation());
-		if (answer.getPerson() != null)
+			p++;
+		}
+		if (answer.getPerson() != null && quest.getPerson() == null)
+		{
 			quest.addPersonality(answer.getPerson());
-		if (answer.getProduct() != null)
+			p++;
+		}
+		if (answer.getProduct() != null && quest.getProduct() == null)
+		{
 			quest.addProduct(answer.getProduct());
-		if (answer.getPiecs() != -1)
+			p++;
+		}
+		if (answer.getPiecs() != -1 && quest.getPiecs() == -1)
+		{
 			quest.addPiecs(answer.getPiecs());
-		listStatic.getItems().add(quest.toString());
-
+			p++;
+		}
+		if(answer.getStreet() != null)
+		{
+			quest.addStreet(answer.getStreet());
+			p++;
+		}
+		System.out.println(quest.toString());
+		if(p>0)
+			return true;
+		return false;
+	//	listStatic.getItems().add(quest.toString()); //<- to moze byc w konsoli wypisywane tak naprawde
+		
 	}
 
 }
