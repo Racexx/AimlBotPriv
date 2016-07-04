@@ -24,7 +24,7 @@ public class Nlp {
 	PrintWriter out;
 	PrintWriter xmlOut = null;
 	static StanfordCoreNLP pipeline;
-	Nlp()
+	public Nlp()
 	{
 		out =new PrintWriter(System.out);
 	    Properties props = new Properties();
