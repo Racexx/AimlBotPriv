@@ -13,7 +13,7 @@ public class MainAiml {
 	PrintWriter stdin = new PrintWriter(p.getOutputStream());
 	InputStream is = p.getInputStream();
 	BufferedReader br = new BufferedReader(new InputStreamReader(is));
-	AimlTample temp;
+	AimlTample temp = null;
 
 	public MainAiml() {
 		try {
@@ -27,30 +27,51 @@ public class MainAiml {
 
 	public void runAiml() {
 		try {
-			AimlTample temp = new AimlTample();
+			temp = new AimlTample();
 			// temp.addaiml("siema", "dupa");
 		} catch (FileNotFoundException e) {
 			System.err.println("nie ma poliku");
 			e.printStackTrace();
 		}
 		stdin.println("cd c:\\ab");// \ /A /Q
+		stdin.flush();
 		stdin.println(" java -cp lib/Ab.jar Main bot=test action=chat trace=false");
 		// java -cp lib/Ab.jar Main bot=test action=chat trace=false
 		stdin.flush();
+		try {
+			while (br.ready()) {
+				br.read();
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
+/*
+ * metody nie testowane niestety wiec dopiero wyjdzie w praniu czy dziala
+ */
 	public String checkAnswer(String question) throws IOException {
 		stdin.println(question);
 		stdin.flush();
-		String answer = br.readLine();
+		StringBuilder sBilder= new StringBuilder();
+		try {
+			while (br.ready()) {
+				sBilder.append(br.read());
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String answer = sBilder.toString();
 		if (answer.contains("no answer for"))
 			return null;
 		else
 			return answer;
 	}
-	public boolean addToAiml(String question,String answer){
+
+	public boolean addToAiml(String question, String answer) {
 		try {
-			temp.addaiml(question,answer);
+			temp.addaiml(question, answer);
 			return true;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

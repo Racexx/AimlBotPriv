@@ -1,11 +1,9 @@
 package aiml;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class AimlTample {
@@ -47,8 +45,7 @@ public class AimlTample {
 		}
 		System.out.println(lastIndexOfQuestion);
 		int temps = -1;
-		String tempik = "";// strasznie bez sensu to napisane
-		// dopisywanie do .aiml
+		String tempik = "";
 
 		while (plikaiml.hasNextLine()) {
 			String next = plikaiml.nextLine();
