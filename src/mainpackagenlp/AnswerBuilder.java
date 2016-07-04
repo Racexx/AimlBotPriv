@@ -17,7 +17,6 @@ public class AnswerBuilder {
 	
 	AnswerBuilder(String question)
 	{
-		
 		this.qustion = question;
 	}
 	
@@ -127,7 +126,6 @@ public class AnswerBuilder {
 			temp +="person: "+x.indexOf(x)+" :" +x+"\n";	
 		}
 		return temp;
-		
 	}
 	
 }

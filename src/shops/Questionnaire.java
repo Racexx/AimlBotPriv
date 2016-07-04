@@ -1,5 +1,11 @@
 package shops;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 public class Questionnaire {
 	private String product=null;
 	private int pices=-1;
@@ -83,6 +89,13 @@ public class Questionnaire {
 	public String getPerson() {
 		// TODO Auto-generated method stub
 		return personality;
+	}
+	public void saveQuest() throws IOException
+	{
+		FileWriter file = new FileWriter("order.txt",true);
+		this.toString().replace("\n", System.getProperty("line.separator"));
+		file.write(this.toString()+System.getProperty("line.separator"));
+		file.close();
 	}
 	
 }
