@@ -1,4 +1,4 @@
-headfons;100;25
+headfons;90;25
 monitor;50;250
 mouse;50;40
 GPU;40;300

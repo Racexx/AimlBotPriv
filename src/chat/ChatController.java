@@ -88,9 +88,14 @@ public class ChatController {
 				sendButton.fire();
 			}
 		});
-//    	ChatController.myStage.setOnCloseRequest(e->{
-//    		aiml.destroy();
-//    	});
+    	ChatController.myStage.setOnCloseRequest(e->{
+    		try {
+				shop.saveToFile();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+    	});
     }
 	private void question(int i, Inventory shop, Nlp nlp, String scan) {
 		if(i == -1){listOfMessages.getItems().add(shop.toString()); listOfMessages.getItems().add(questionList[0]);}else{

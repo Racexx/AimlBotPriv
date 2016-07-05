@@ -2,6 +2,7 @@ package shops;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -17,7 +18,7 @@ public class Inventory {
 			String[] s = zdanie.split(";");
 			addProducts(new Product(s[0], Integer.valueOf(s[1]), Integer.valueOf(s[2])));
 		}
-
+		in.close();
 	}
 
 	public Inventory() {
@@ -31,6 +32,16 @@ public class Inventory {
 			addProducts(new Product("GPU", 40, 300));
 			e.printStackTrace();
 		}
+
+	}
+
+	public void saveToFile() throws FileNotFoundException {
+		PrintWriter zapis = new PrintWriter("inventory.txt");
+		for (int i = 0; i < productsList.size(); ++i) {
+			zapis.println(productsList.get(i).getName() + ";" + productsList.get(i).getPiecs() + ";"
+					+ productsList.get(i).getPrice());
+		}
+		zapis.close();
 
 	}
 

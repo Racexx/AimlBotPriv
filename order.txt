@@ -26,3 +26,10 @@ STREET: St. 12 lol
 PRODUCT: CPU
 PIECS: 10
 
+QUEST
+PERSON: [Marcin]
+LOCATION: [Cracow]
+STREET: St. 21
+PRODUCT: headfons
+PIECS: 10
+
