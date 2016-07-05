@@ -134,10 +134,15 @@ public class ChatController {
 			
 			initialize();
 		}else{
-			if(answerToAdd == null || answerToAdd.equals("OK") )
+			if(answerToAdd == null )
+			{
+				
+				listOfMessages.getItems().add("I dont recognize this. \n"+questionList[i-1]);
+			}	else if(answerToAdd.equals("OK"))
+			{
 				listOfMessages.getItems().add(questionList[i-1]);
-					else
-						listOfMessages.getItems().add(answerToAdd + questionList[i-1]);
+			}else
+						listOfMessages.getItems().add(answerToAdd +"\n"+ questionList[i-1]);
 				}
 		
 	}
