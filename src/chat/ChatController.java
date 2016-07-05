@@ -88,9 +88,9 @@ public class ChatController {
 				sendButton.fire();
 			}
 		});
-    	ChatController.myStage.setOnCloseRequest(e->{
-    		aiml.destroy();
-    	});
+//    	ChatController.myStage.setOnCloseRequest(e->{
+//    		aiml.destroy();
+//    	});
     }
 	private void question(int i, Inventory shop, Nlp nlp, String scan) {
 		if(i == -1){listOfMessages.getItems().add(shop.toString()); listOfMessages.getItems().add(questionList[0]);}else{

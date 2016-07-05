@@ -1,0 +1,28 @@
+QUEST
+PERSON: [Marcin]
+LOCATION: [Poland]
+STREET: St. 21
+PRODUCT: headfons
+PIECS: 21
+
+QUEST
+PERSON: [Marcin, Witek][Marcin, Witek]
+LOCATION: [Poland, Cracow][Poland, Cracow]
+STREET: St. lol
+PRODUCT: headfons
+PIECS: 1
+
+QUEST
+PERSON: [Marcin, Witek, Cracow, St., Wodna][Marcin, Witek, Cracow, St., Wodna][Marcin, Witek, Cracow, St., Wodna][Marcin, Witek, Cracow, St., Wodna][Marcin, Witek, Cracow, St., Wodna]
+LOCATION: [Cracow]
+STREET: Marcin Witek Cracow St. Wodna
+PRODUCT: headfons
+PIECS: 10
+
+QUEST
+PERSON: [Marcin]
+LOCATION: [Cracow]
+STREET: St. 12 lol
+PRODUCT: CPU
+PIECS: 10
+

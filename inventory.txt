@@ -1,0 +1,7 @@
+headfons;100;25
+monitor;50;250
+mouse;50;40
+GPU;40;300
+keyboard;50;100
+CPU;10;500
+watch;20;400
