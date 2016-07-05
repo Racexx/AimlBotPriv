@@ -10,17 +10,20 @@ import java.io.PrintWriter;
 public class MainAiml {
 	String[] command = { "cmd", };
 	Process p;
-	PrintWriter stdin = new PrintWriter(p.getOutputStream());
-	InputStream is = p.getInputStream();
-	BufferedReader br = new BufferedReader(new InputStreamReader(is));
+	PrintWriter stdin ;
+	InputStream is ;
+	BufferedReader br ;
 	AimlTample temp = null;
 
 	public MainAiml() {
 		try {
 			p = Runtime.getRuntime().exec(command);
+			stdin = new PrintWriter(p.getOutputStream());
+			is = p.getInputStream();
+			br = new BufferedReader(new InputStreamReader(is));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+		System.out.println(e.getMessage());	
 		}
 		runAiml();
 	}
@@ -78,6 +81,14 @@ public class MainAiml {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public void destroy() {
+		
+		stdin.close();
+		p.destroyForcibly();
+		// TODO Auto-generated method stub
+		
 	}
 
 }

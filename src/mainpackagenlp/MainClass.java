@@ -2,6 +2,7 @@ package mainpackagenlp;
 
 import java.util.Scanner;
 
+import chat.ChatController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,6 +22,7 @@ public class MainClass extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
+		ChatController.myStage=primaryStage;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("chat_view.fxml"));
 		Parent root = (Parent) loader.load();
 		Scene scene = new Scene(root, 300, 360);
@@ -28,6 +30,11 @@ public class MainClass extends Application{
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		primaryStage.setResizable(false);
-	}
 
+	}
+	@Override
+	public void stop()
+	{
+		
+	}
 }

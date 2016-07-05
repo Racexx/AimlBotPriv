@@ -4,10 +4,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+
+import aiml.MainAiml;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 import mainpackagenlp.AnswerBuilder;
 import mainpackagenlp.Nlp;
 import shops.Inventory;
@@ -23,10 +27,12 @@ public class ChatController {
     
     private static ListView<String> listStatic;
 
+    public static Stage myStage;
     @FXML
     private Button sendButton;
     Inventory shop ;
 	Nlp nlp ;
+	MainAiml aiml;
     static Questionnaire quest;
     String [] questionList  = {"What do you want to buy ?" ,"How many * you wont to buy ?" , "What is you name and surrname ?" ,"Where do you live ?" ,"What is your street ?" , ""}; 
     public ChatController() {
@@ -37,11 +43,19 @@ public class ChatController {
 	}
     @FXML
     public void initialize(){
+//    	aiml=new MainAiml();
+//    	try {
+//			System.out.println(aiml.checkAnswer("hello Alice"));
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
     	quest = new Questionnaire();
     	listStatic=listOfMessages;
     	System.out.println("Tworze initalize");
     	question(-1,shop, nlp, textToSendArea.getText());
     	sendButton.setOnAction(e->{
+    		listOfMessages.getItems().add(textToSendArea.getText());
     		System.out.println("WSZEDLEM");
     		
     		switch (quest.statusQuestion()) {
@@ -74,8 +88,9 @@ public class ChatController {
 				sendButton.fire();
 			}
 		});
-    	
-    	 
+    	ChatController.myStage.setOnCloseRequest(e->{
+    		aiml.destroy();
+    	});
     }
 	private void question(int i, Inventory shop, Nlp nlp, String scan) {
 		if(i == -1){listOfMessages.getItems().add(shop.toString()); listOfMessages.getItems().add(questionList[0]);}else{
