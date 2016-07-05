@@ -56,7 +56,7 @@ public class ChatController {
     	System.out.println("Tworze initalize");
     	question(-1,shop, nlp, textToSendArea.getText());
     	sendButton.setOnAction(e->{
-    		listOfMessages.getItems().add(textToSendArea.getText());
+    		listOfMessages.getItems().add(textToSendArea.getText().trim());
     		System.out.println("WSZEDLEM");
     		
     		switch (quest.statusQuestion()) {
