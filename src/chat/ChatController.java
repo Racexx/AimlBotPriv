@@ -109,14 +109,14 @@ public class ChatController {
 			AnswerBuilder answer = nlp.question(question);
 			//listOfMessages.getItems().add("------------------------\n"+answer.toString());
 			System.out.println("------------------------\n"+answer.toString());
-			questionnaireupdate(answer);
+			String answerToAdd = questionnaireupdate(answer, i);
 			AddtoQuestionProducts();
-			updateList(quest.statusQuestion());
+			updateList(quest.statusQuestion(),answerToAdd);
 			}
 		}
 	}
 		
-	private void updateList(int i) {
+	private void updateList(int i, String answerToAdd) {
 	//	System.out.println("UPDATE-----> "+i);
 		if(i == 0)
 		{ //wyczysc itp
@@ -134,8 +134,12 @@ public class ChatController {
 			
 			initialize();
 		}else{
-		listOfMessages.getItems().add(questionList[i-1]);
-		}
+			if(answerToAdd == null || answerToAdd.equals("OK") )
+				listOfMessages.getItems().add(questionList[i-1]);
+					else
+						listOfMessages.getItems().add(answerToAdd + questionList[i-1]);
+				}
+		
 	}
 	private void AddtoQuestionProducts() {
 		if(questionList[1].contains("*") && quest.getProduct() != null)
@@ -144,40 +148,55 @@ public class ChatController {
 		}
 		
 	}
-	private  void questionnaireupdate(AnswerBuilder answer ) {
-	
+	private  String questionnaireupdate(AnswerBuilder answer , int i) {
+		
 		if (answer.getLocation() != null && quest.getLocation() == null)
 		{	
 			quest.addLocation(answer.getLocation());
-
+			if(i != 4)
+			return "OK, your location is "+ answer.getLocation()+" but.";
+			return "OK";
 		}
 		if (answer.getPerson() != null && quest.getPerson() == null)
 		{
 			
 			quest.addPersonality(answer.getPerson());
+			if(i != 3)
+			return "OK, your personality is "+ answer.getPerson()+" but.";
+			return "OK";
 
 		}
 		if (answer.getProduct() != null && quest.getProduct() == null)
 		{
 			
 			quest.addProduct(answer.getProduct());
-	
+			if(i != 1)
+			return "OK, your personality is "+ answer.getProduct()+" but.";
+			return "OK";
 		}
 		if (answer.getPiecs() != -1 && quest.getPiecs() == -1)
 		{	
 			
 			quest.addPiecs(answer.getPiecs());
+			if(i != 2)
+			return "OK, you select "+ answer.getPiecs()+"pics"+" but.";
+			return "OK";
 		
 		}
 		if(answer.getStreet() != null)
 		{	
 			quest.addStreet(answer.getStreet());
+			if(i != 5)
+			return "OK, your Street is +" + answer.getStreet()+" but.";
+			return "OK";
 		}
-		
+	
 		System.out.println(quest.toString());
-
+		return null;
 	//	listStatic.getItems().add(quest.toString()); //<- to moze byc w konsoli wypisywane tak naprawde
 		
 	}
 
 }
+
+

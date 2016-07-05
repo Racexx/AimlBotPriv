@@ -45,7 +45,7 @@ public class AnswerBuilder {
 		String temp="";
 		for(String x: person)
 		{
-			temp += person; 
+			temp += x.toString(); 
 		} 
 		if(person !=null)
 		return temp;
@@ -58,7 +58,7 @@ public class AnswerBuilder {
 		String temp="";
 		for(String x: location)
 		{
-			temp += location; 
+			temp += x.toString(); 
 		}
 		if(location !=null)
 		return temp;
