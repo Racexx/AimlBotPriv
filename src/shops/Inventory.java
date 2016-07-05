@@ -73,4 +73,15 @@ public class Inventory {
 
 	}
 
+	public int getPiecs(String product) {
+		for(Product x : productsList)
+		{
+			if(x.getName().equals(product))
+			{
+				return Integer.valueOf(x.getPiecs());
+			}
+		}
+		return -1;
+	}
+
 }

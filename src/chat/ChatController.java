@@ -34,7 +34,7 @@ public class ChatController {
 	Nlp nlp ;
 	MainAiml aiml;
     static Questionnaire quest;
-    String [] questionList  = {"What do you want to buy ?" ,"How many * you wont to buy ?" , "What is you name and surrname ?" ,"Where do you live ?" ,"What is your street ?" , ""}; 
+    String [] questionList  = {"What do you want to buy ?" ,"How many * you wont to buy ?" , "What is you name and surrname ?" ,"Where do you live ?" ,"What is your street(St.) ?" , ""}; 
     String [] answerList = {"this product" , "piecs" , "name and surrname" , "city" , "street"};
     public ChatController() {
 		// TODO Auto-generated constructor stub
@@ -182,7 +182,14 @@ public class ChatController {
 		}
 		if (answer.getPiecs() != -1 && quest.getPiecs() == -1)
 		{	
-			
+			if(quest.getProduct() == null)
+			{
+				return "First select product then buy ";
+			}
+			if(shop.getPiecs(quest.getProduct()) < answer.getPiecs())
+			{
+				return "We cant sell you ";
+			}
 			quest.addPiecs(answer.getPiecs());
 			if(i != 2)
 			return "OK, you select "+ answer.getPiecs()+"pics"+" but.";
