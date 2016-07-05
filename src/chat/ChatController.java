@@ -35,6 +35,7 @@ public class ChatController {
 	MainAiml aiml;
     static Questionnaire quest;
     String [] questionList  = {"What do you want to buy ?" ,"How many * you wont to buy ?" , "What is you name and surrname ?" ,"Where do you live ?" ,"What is your street ?" , ""}; 
+    String [] answerList = {"this product" , "piecs" , "name and surrname" , "city" , "street"};
     public ChatController() {
 		// TODO Auto-generated constructor stub
     	shop = new Inventory();
@@ -137,7 +138,7 @@ public class ChatController {
 			if(answerToAdd == null )
 			{
 				
-				listOfMessages.getItems().add("I dont recognize this. \n"+questionList[i-1]);
+				listOfMessages.getItems().add("I dont recognize this "+answerList[i-1]+" \n"+questionList[i-1]);
 			}	else if(answerToAdd.equals("OK"))
 			{
 				listOfMessages.getItems().add(questionList[i-1]);
